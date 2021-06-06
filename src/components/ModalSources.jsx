@@ -24,7 +24,7 @@ class PublicSource extends React.Component {
 
   render() {
     return <div className="maputnik-public-source">
-			<InputButton
+      <InputButton
         className="maputnik-public-source-select"
 				onClick={() => this.props.onSelect(this.props.id)}
 			>
@@ -197,7 +197,7 @@ class AddSource extends React.Component {
 
   render() {
     // Kind of a hack because the type changes, however maputnik has 1..n
-    // options per type, for example 
+    // options per type, for example
     //
     //  - 'geojson' - 'GeoJSON (URL)' and 'GeoJSON (JSON)'
     //  - 'raster' - 'Raster (TileJSON URL)' and 'Raster (XYZ URL)'
@@ -261,6 +261,34 @@ export default class ModalSources extends React.Component {
     return strippedSource
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      tilesets: []
+    }
+  }
+
+  componentDidMount() {
+    let tilesetOptions = [];
+    fetch('http://romania2x.net/api/core/tilesets', {mode: 'cors'})
+      .then(response => {
+        return response.json()
+      })
+      .then(body => {
+        this.setState({
+          tilesets: body.results.map(source => {
+            return <PublicSource
+              key={source.identifier}
+              id={source.identifier}
+              type={source.type}
+              title={source.name}
+              onSelect={() => this.props.onStyleChanged(addSource(this.props.mapStyle, source.identifier, this.stripTitle(source)))}
+            />
+          })
+        });
+      });
+  }
+
   render() {
     const mapStyle = this.props.mapStyle
     const activeSources = Object.keys(mapStyle.sources).map(sourceId => {
@@ -271,17 +299,6 @@ export default class ModalSources extends React.Component {
         source={source}
         onChange={src => this.props.onStyleChanged(changeSource(mapStyle, sourceId, src))}
         onDelete={() => this.props.onStyleChanged(deleteSource(mapStyle, sourceId))}
-      />
-    })
-
-    const tilesetOptions = Object.keys(publicSources).filter(sourceId => !(sourceId in mapStyle.sources)).map(sourceId => {
-      const source = publicSources[sourceId]
-      return <PublicSource
-        key={sourceId}
-        id={sourceId}
-        type={source.type}
-        title={source.title}
-        onSelect={() => this.props.onStyleChanged(addSource(mapStyle, sourceId, this.stripTitle(source)))}
       />
     })
 
@@ -298,12 +315,12 @@ export default class ModalSources extends React.Component {
       </section>
 
       <section className="maputnik-modal-section">
-        <h1>Choose Public Source</h1>
+        <h1>Choose Source</h1>
         <p>
-          Add one of the publicly available sources to your style.
+          Add one of the available sources to your style.
         </p>
-        <div className="maputnik-public-sources" style={{maxwidth: 500}}>
-        {tilesetOptions}
+        <div className="maputnik-public-sources" style={{maxwidth: 800}}>
+          {this.state.tilesets}
         </div>
       </section>
 

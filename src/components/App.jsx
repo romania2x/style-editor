@@ -100,9 +100,7 @@ export default class App extends React.Component {
       port = window.location.port
     }
     this.styleStore = new ApiStyleStore({
-      onLocalStyleChange: mapStyle => this.onStyleChanged(mapStyle, {save: false}),
-      port: port,
-      host: params.get("localhost")
+      onLocalStyleChange: mapStyle => this.onStyleChanged(mapStyle, {save: false})
     })
 
 
@@ -187,7 +185,7 @@ export default class App extends React.Component {
       }
       this.styleStore.init(err => {
         if(err) {
-          console.log('Falling back to local storage for storing styles')
+          console.log('Falling back to local storage for storing styles',err)
           this.styleStore = new StyleStore()
         }
         this.styleStore.latestStyle(mapStyle => this.onStyleChanged(mapStyle, {initialLoad: true}))
@@ -441,7 +439,7 @@ export default class App extends React.Component {
     if (opts.save) {
       this.saveStyle(newStyle);
     }
-       
+
     this.setState({
       mapStyle: newStyle,
       dirtyMapStyle: dirtyMapStyle,

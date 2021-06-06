@@ -219,8 +219,8 @@ export default class AppToolbar extends React.Component {
           >
             <span dangerouslySetInnerHTML={{__html: logoImage}} />
             <h1>
-              <span className="maputnik-toolbar-name">{pkgJson.name}</span>
-              <span className="maputnik-toolbar-version">v{pkgJson.version}</span>
+              <span className="maputnik-toolbar-name">StyleEditor</span>
+              <span className="maputnik-toolbar-version">{pkgJson.name}</span>
             </h1>
           </a>
         </div>
@@ -269,15 +269,6 @@ export default class AppToolbar extends React.Component {
               </select>
             </label>
           </ToolbarSelect>
-
-          <ToolbarLink href={"https://github.com/maputnik/editor/wiki"}>
-            <MdHelpOutline />
-            <IconText>Help</IconText>
-          </ToolbarLink>
-          <ToolbarLinkHighlighted href={"https://gregorywolanski.typeform.com/to/cPgaSY"}>
-            <MdAssignmentTurnedIn />
-            <IconText>Take the Maputnik Survey</IconText>
-          </ToolbarLinkHighlighted>
         </div>
       </div>
     </nav>

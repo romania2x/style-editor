@@ -1,0 +1,11 @@
+version: 3
+services:
+  maputnik-editor:
+    build:
+      context: services/maputnik-editor
+      dockerfile: Dockerfile
+    networks:
+      - romtelecom
+    volumes:
+      - ./:/maputnik
+    command: npm start -- --host 0.0.0.0

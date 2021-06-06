@@ -6,8 +6,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const HOST = process.env.HOST || "127.0.0.1";
-const PORT = process.env.PORT || "8888";
+const HOST = process.env.HOST || "0.0.0.0";
+const PORT = process.env.PORT || "80";
 
 module.exports = {
   target: 'web',
@@ -41,13 +41,16 @@ module.exports = {
     // See <https://webpack.js.org/configuration/stats/> for details
     stats: 'minimal',
     // enable HMR
-    hot: true,
+    hot: false,
     // embed the webpack-dev-server runtime into the bundle
-    inline: true,
+    inline: false,
     // serve index.html in place of 404 responses to allow HTML5 history
     historyApiFallback: true,
     port: PORT,
     host: HOST,
+    public: 'romania2x.net',
+    disableHostCheck: true,
+    liveReload: false,
     watchOptions: {
       // Disabled polling by default as it causes lots of CPU usage and hence drains laptop batteries. To enable polling add WEBPACK_DEV_SERVER_POLLING to your environment
       // See <https://webpack.js.org/configuration/watch/#watchoptions-poll> for details

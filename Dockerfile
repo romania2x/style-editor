@@ -8,15 +8,4 @@ RUN npm install
 # Build maputnik
 # TODO:  we should also do a   npm run test   here (needs more dependencies)
 COPY . .
-RUN npm run build
-
-#---------------------------------------------------------------------------
-
-# Create a clean python-based image with just the build results
-FROM python:3-slim
-WORKDIR /maputnik
-
-COPY --from=builder /maputnik/build/build .
-
-EXPOSE 8888
-CMD python -m http.server 8888
+CMD npm start --host 0.0.0.0
