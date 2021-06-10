@@ -9,7 +9,7 @@ import FieldSelect from './FieldSelect'
 import ModalSourcesTypeEditor from './ModalSourcesTypeEditor'
 
 import style from '../libs/style'
-import { deleteSource, addSource, changeSource } from '../libs/source'
+import {deleteSource, addSource, changeSource} from '../libs/source'
 import publicSources from '../config/tilesets.json'
 
 import {MdAddCircleOutline, MdDelete} from 'react-icons/md'
@@ -26,15 +26,15 @@ class PublicSource extends React.Component {
     return <div className="maputnik-public-source">
       <InputButton
         className="maputnik-public-source-select"
-				onClick={() => this.props.onSelect(this.props.id)}
-			>
-				<div className="maputnik-public-source-info">
-					<p className="maputnik-public-source-name">{this.props.title}</p>
-					<p className="maputnik-public-source-id">#{this.props.id}</p>
-				</div>
-				<span className="maputnik-space" />
-				<MdAddCircleOutline />
-			</InputButton>
+        onClick={() => this.props.onSelect(this.props.id)}
+      >
+        <div className="maputnik-public-source-info">
+          <p className="maputnik-public-source-name">{this.props.title}</p>
+          <p className="maputnik-public-source-id">#{this.props.id}</p>
+        </div>
+        <span className="maputnik-space"/>
+        <MdAddCircleOutline/>
+      </InputButton>
     </div>
   }
 }
@@ -325,11 +325,11 @@ export default class ModalSources extends React.Component {
       </section>
 
       <section className="maputnik-modal-section">
-				<h1>Add New Source</h1>
-				<p>Add a new source to your style. You can only choose the source type and id at creation time!</p>
-				<AddSource
-					onAdd={(sourceId, source) => this.props.onStyleChanged(addSource(mapStyle, sourceId, source))}
-				/>
+        <h1>Add New Source</h1>
+        <p>Add a new source to your style. You can only choose the source type and id at creation time!</p>
+        <AddSource
+          onAdd={(sourceId, source) => this.props.onStyleChanged(addSource(mapStyle, sourceId, source))}
+        />
       </section>
     </Modal>
   }

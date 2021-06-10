@@ -27,7 +27,7 @@ import ModalDebug from './ModalDebug'
 import { downloadGlyphsMetadata, downloadSpriteMetadata } from '../libs/metadata'
 import {latest, validate} from '@mapbox/mapbox-gl-style-spec'
 import style from '../libs/style'
-import { initialStyleUrl, loadStyleUrl, removeStyleQuerystring } from '../libs/urlopen'
+import { initialStyle, loadStyleUrl, removeStyleQuerystring } from '../libs/urlopen'
 import { undoMessages, redoMessages } from '../libs/diffmessage'
 import { StyleStore } from '../libs/stylestore'
 import { ApiStyleStore } from '../libs/apistore'
@@ -174,11 +174,10 @@ export default class App extends React.Component {
       }
     })
 
-    const styleUrl = initialStyleUrl()
-    if(styleUrl && window.confirm("Load style from URL: " + styleUrl + " and discard current changes?")) {
+    const styleUrl = initialStyle()
+    if(styleUrl) {
       this.styleStore = new StyleStore()
-      loadStyleUrl(styleUrl, mapStyle => this.onStyleChanged(mapStyle))
-      removeStyleQuerystring()
+      loadStyleUrl('/api/core/styles/' + styleUrl, mapStyle => this.onStyleChanged(mapStyle))
     } else {
       if(styleUrl) {
         removeStyleQuerystring()

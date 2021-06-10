@@ -2,7 +2,7 @@ import url from 'url'
 import querystring from 'querystring'
 import style from './style.js'
 
-export function initialStyleUrl() {
+export function initialStyle() {
   const initialUrl = url.parse(window.location.href, true)
   return (initialUrl.query || {}).style
 }
@@ -19,7 +19,8 @@ export function loadStyleUrl(styleUrl, cb) {
   .then(function(body) {
     cb(style.ensureStyleValidity(body))
   })
-  .catch(function() {
+  .catch(function(err) {
+    console.error(err);
     console.warn('Could not fetch default style', styleUrl)
     cb(style.emptyStyle)
   })
@@ -37,7 +38,7 @@ export function removeStyleQuerystring() {
   let newUrlHash = initialUrl.hash
   if(newUrlHash === null) {
     newUrlHash = ""
-  } 
+  }
   const newUrl = initialUrl.protocol + "//" + initialUrl.host + initialUrl.pathname + qs + newUrlHash
   window.history.replaceState({}, document.title, newUrl)
 }
