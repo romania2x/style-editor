@@ -276,7 +276,7 @@ export default class ModalSources extends React.Component {
       })
       .then(body => {
         this.setState({
-          tilesets: body.results.map(source => {
+          tilesets: body.map(source => {
             return <PublicSource
               key={source.identifier}
               id={source.identifier}

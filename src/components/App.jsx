@@ -608,11 +608,13 @@ export default class App extends React.Component {
           }
 
           // Create new objects before setState
-          const sources = Object.assign({}, {
-            [key]: this.state.sources[key],
-          });
+          const sources = {};
 
           for(let layer of json.vector_layers) {
+            sources[key] = Object.assign({},this.state.sources[key]);
+            if(sources[key].layers === undefined){
+              sources[key].layers = [];
+            }
             sources[key].layers.push(layer.id)
           }
 

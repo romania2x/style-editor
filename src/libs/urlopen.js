@@ -26,6 +26,26 @@ export function loadStyleUrl(styleUrl, cb) {
   })
 }
 
+export function saveStyle(styleId, body, cb) {
+  fetch('/api/core/styles/' + styleId, {
+    method: 'POST',
+    credentials: 'same-origin',
+    mode: 'cors',
+    body: body,
+    headers: {'Content-Type': 'application/json'}
+  }).then(function (response) {
+    return response.json();
+  })
+    .then(function (body) {
+      cb(body)
+    })
+    .catch(function (err) {
+      console.error(err);
+      console.warn('Could not save style', styleId, body)
+      cb(style.emptyStyle)
+    })
+}
+
 export function removeStyleQuerystring() {
   const initialUrl = url.parse(window.location.href, true)
   let qs = querystring.parse(window.location.search.slice(1))
