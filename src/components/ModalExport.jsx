@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Slugify from 'slugify'
-import { saveAs } from 'file-saver'
+import {saveAs} from 'file-saver'
 import pkgLockJson from '../../package-lock.json'
 
 import {format} from '@mapbox/mapbox-gl-style-spec'
@@ -30,7 +30,7 @@ export default class ModalExport extends React.Component {
     super(props);
   }
 
-  tokenizedStyle () {
+  tokenizedStyle() {
     return format(
       style.stripAccessTokens(
         style.replaceAccessTokens(this.props.mapStyle)
@@ -38,8 +38,8 @@ export default class ModalExport extends React.Component {
     );
   }
 
-  exportName () {
-    if(this.props.mapStyle.name) {
+  exportName() {
+    if (this.props.mapStyle.name) {
       return Slugify(this.props.mapStyle.name, {
         replacement: '_',
         remove: /[*\-+~.()'"!:]/g,
@@ -100,7 +100,7 @@ export default class ModalExport extends React.Component {
           <InputButton
             onClick={this.downloadStyle.bind(this)}
           >
-            <MdFileDownload />
+            <MdFileDownload/>
             Download Style
           </InputButton>
 

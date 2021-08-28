@@ -3,7 +3,16 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import {detect} from 'detect-browser';
 
-import {MdFileDownload, MdOpenInBrowser, MdSettings, MdLayers, MdHelpOutline, MdFindInPage, MdAssignmentTurnedIn} from 'react-icons/md'
+import {
+  MdFileDownload,
+  MdOpenInBrowser,
+  MdSettings,
+  MdLayers,
+  MdHelpOutline,
+  MdFindInPage,
+  MdAssignmentTurnedIn,
+  MdSave
+} from 'react-icons/md'
 
 
 import logoImage from 'maputnik-design/logos/logo-color.svg'
@@ -134,9 +143,8 @@ export default class AppToolbar extends React.Component {
   onSkip = (target) => {
     if (target === "map") {
       document.querySelector(".mapboxgl-canvas").focus();
-    }
-    else {
-      const el = document.querySelector("#skip-target-"+target);
+    } else {
+      const el = document.querySelector("#skip-target-" + target);
       el.focus();
     }
   }
@@ -217,7 +225,7 @@ export default class AppToolbar extends React.Component {
             rel="noreferrer noopener"
             href="https://github.com/maputnik/editor"
           >
-            <span dangerouslySetInnerHTML={{__html: logoImage}} />
+            <span dangerouslySetInnerHTML={{__html: logoImage}}/>
             <h1>
               <span className="maputnik-toolbar-name">StyleEditor</span>
               <span className="maputnik-toolbar-version">{pkgJson.name}</span>
@@ -230,16 +238,16 @@ export default class AppToolbar extends React.Component {
             <IconText>Save</IconText>
           </ToolbarAction>
           <ToolbarAction wdKey="nav:sources" onClick={this.props.onToggleModal.bind(this, 'sources')}>
-            <MdLayers />
+            <MdLayers/>
             <IconText>Data Sources</IconText>
           </ToolbarAction>
           <ToolbarAction wdKey="nav:settings" onClick={this.props.onToggleModal.bind(this, 'settings')}>
-            <MdSettings />
+            <MdSettings/>
             <IconText>Style Settings</IconText>
           </ToolbarAction>
 
           <ToolbarSelect wdKey="nav:inspect">
-            <MdFindInPage />
+            <MdFindInPage/>
             <label>View
               <select
                 className="maputnik-select"
