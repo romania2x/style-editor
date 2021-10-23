@@ -10,7 +10,6 @@ import ModalSourcesTypeEditor from './ModalSourcesTypeEditor'
 
 import style from '../libs/style'
 import {deleteSource, addSource, changeSource} from '../libs/source'
-import publicSources from '../config/tilesets.json'
 
 import {MdAddCircleOutline, MdDelete} from 'react-icons/md'
 
@@ -269,27 +268,39 @@ export default class ModalSources extends React.Component {
   }
 
   componentDidMount() {
-    let tilesetOptions = [];
-    fetch('http://romania2x.net/api/core/tilesets', {mode: 'cors'})
-      .then(response => {
-        return response.json()
-      })
-      .then(body => {
-        this.setState({
-          tilesets: body.map(source => {
-            return <PublicSource
-              key={source.identifier}
-              id={source.identifier}
-              type={source.type}
-              title={source.name}
-              onSelect={() => this.props.onStyleChanged(addSource(this.props.mapStyle, source.identifier, this.stripTitle(source)))}
-            />
-          })
-        });
-      });
+
   }
 
   render() {
+    if (this.props.isOpen && this.state.tilesets.length === 0) {
+      //fetch data
+      fetch('/api/infra/vector-tile/sources', {
+        mode: 'cors', headers: {
+          Authorization: "Bearer " + localStorage.getItem('openid_token')
+        }
+      })
+        .then(response => {
+          return response.json()
+        })
+        .then(body => {
+          this.setState({
+            tilesets: body.map(source => {
+              return <PublicSource
+                key={source.id}
+                id={source.id}
+                type={source.type}
+                title={source.id}
+                onSelect={() => this.props.onStyleChanged(addSource(this.props.mapStyle, source.id, this.stripTitle(source)))}
+              />
+            })
+          });
+        });
+    } else if (!this.props.isOpen) {
+      if (this.state.tilesets.length > 0) {
+        this.setState({tilesets: []});
+      }
+      return null;
+    }
     const mapStyle = this.props.mapStyle
     const activeSources = Object.keys(mapStyle.sources).map(sourceId => {
       const source = mapStyle.sources[sourceId]

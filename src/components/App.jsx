@@ -177,7 +177,7 @@ export default class App extends React.Component {
     const styleUrl = initialStyle()
     if(styleUrl) {
       this.styleStore = new StyleStore()
-      loadStyleUrl('/api/core/styles/' + styleUrl, mapStyle => this.onStyleChanged(mapStyle))
+      loadStyleUrl('/api/infra/vector-tile/styles/' + styleUrl, mapStyle => this.onStyleChanged(mapStyle))
     } else {
       if(styleUrl) {
         removeStyleQuerystring()
@@ -599,6 +599,9 @@ export default class App extends React.Component {
 
         fetch(url, {
           mode: 'cors',
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem('openid_token')
+          }
         })
         .then(response => response.json())
         .then(json => {

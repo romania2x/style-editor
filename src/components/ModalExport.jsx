@@ -5,13 +5,10 @@ import {saveAs} from 'file-saver'
 import pkgLockJson from '../../package-lock.json'
 
 import {format} from '@mapbox/mapbox-gl-style-spec'
-import FieldString from './FieldString'
-import FieldCheckbox from './FieldCheckbox'
 import InputButton from './InputButton'
 import Modal from './Modal'
 import {MdFileDownload, MdSave} from 'react-icons/md'
 import style from '../libs/style'
-import fieldSpecAdditional from '../libs/field-spec-additional'
 import {saveStyle} from "../libs/urlopen";
 
 
@@ -51,9 +48,8 @@ export default class ModalExport extends React.Component {
   }
 
   save() {
-    console.log('Saving style', this.tokenizedStyle());
     saveStyle(this.props.mapStyle.id, this.tokenizedStyle(), () => {
-      alert('Style saved');
+      this.props.onOpenToggle(false);
     });
     return;
 

@@ -11,7 +11,10 @@ export function loadStyleUrl(styleUrl, cb) {
   console.log('Loading style', styleUrl)
   fetch(styleUrl, {
     mode: 'cors',
-    credentials: "same-origin"
+    credentials: "same-origin",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem('openid_token')
+    }
   })
   .then(function(response) {
     return response.json();
@@ -27,12 +30,12 @@ export function loadStyleUrl(styleUrl, cb) {
 }
 
 export function saveStyle(styleId, body, cb) {
-  fetch('/api/core/styles/' + styleId, {
+  fetch('/api/infra/vector-tile/styles/' + styleId, {
     method: 'POST',
     credentials: 'same-origin',
     mode: 'cors',
     body: body,
-    headers: {'Content-Type': 'application/json'}
+    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('openid_token')}
   }).then(function (response) {
     return response.json();
   })

@@ -146,7 +146,15 @@ export default class MapMapboxGl extends React.Component {
       container: this.container,
       style: this.props.mapStyle,
       hash: true,
-      maxZoom: 24
+      maxZoom: 24,
+      transformRequest: (url, resourceType) => {
+        return {
+          url: url,
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('openid_token')
+          }
+        }
+      }
     }
 
     const map = new MapboxGl.Map(mapOpts);
